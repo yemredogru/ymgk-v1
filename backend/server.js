@@ -82,7 +82,7 @@ app.post("/login", (req, res) => {
       user.find({ username: req.body.username }, (err, data) => {
         if (data.length>0) {
 
-          if (bcrypt.compareSync(data[0].password, req.body.password)) {
+          if (bcrypt.compare(req.body.password,data[0].password)) {
             checkUserAndGenerateToken(data[0], req, res);
           } else {
 
@@ -136,6 +136,7 @@ app.post("/register", (req, res) => {
                 status: false
               });
             } else {
+        
               res.status(200).json({
                 status: true,
                 title: 'Registered Successfully.'
